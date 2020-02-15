@@ -86,9 +86,7 @@
         hour = 0;
         $("#timer").html("00:00:00");
         time = setInterval(countup ,1000);
-
         $(this).prop("disabled", true); //thisは(＃start)
-
         $("#stop,#reset").removeAttr("disabled");
         //removeAttr ()は指定属性を持つ要素から、属性を削除
       });
@@ -106,6 +104,7 @@
         $(this).prop("disabled",true);
         $("#stop").removeAttr("disabled");
       });
+
       //リセット処理
       $("#reset").on("click",function(){
         sec = 0;

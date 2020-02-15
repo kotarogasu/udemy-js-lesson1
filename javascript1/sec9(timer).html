@@ -5,13 +5,116 @@
   <title>jQUeryの練習</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  
   <style>
-  
+    #main{
+      width: 300px;
+      height: 100px;
+      margin: 20px;
+      background-color: #f0f0f0;
+      position: relative;
+    }
+    #timer{
+      width: 200px;
+      height: 30px;
+      position: absolute;
+      top: 20px;
+      margin: 0 50px;
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: bold;
+      background-color: #f0ddd4;
+      text-align: center;
+    }
+    form{
+      position: absolute;
+      top: 60px;
+      left: 50px;
+    }
   </style>
   <body>
-    
+    <h1>タイマー</h1>
+    <hr>
+    <div id="main">
+      <div id="timer">00:00:00</div>
+      <form>
+        <input type="button" id="start" value="start">
+        <!-- disabledは初期段階でstart以外押せない属性 -->
+        <input type="button" id="stop" value="stop" disabled="disabled"> 
+        <input type="button" id="restart" value="restart" disabled="disabled">
+        <input type="button" id="reset" value="reset" disabled="disabled">
+      </form>
+    </div>
   </body>
   <script>
+    /*
+    .setinterval(関数、間隔) 一定の間隔をおいて関数を繰り返す
+    .prop(name,value) 指定したい属性に値を設定する
+    .removeAttr(name) 指定した属性を持つ要素から、属性を削除する
+    .clearInterval() setinterval()で設定したタイマーを解除する
+    .slice(start,[end]) 要素の集合から指定した範囲のものを返す。マイナスを指定すると
+    後ろからの指定になります
+    */
     $(function(){
+      //変数の宣言
+      var sec = 0;
+      var min = 0;
+      var hour = 0;
+      var time;
 
+      // カウントアップ処理
+      function countup(){
+        sec += 1;
+        if(sec > 59){
+          sec = 0;
+          min += 1;
+        }
+        if(min > 59){
+          min = 0;
+          hour += 1;
+        }
+        //0埋め
+        sec_num = ("0"+ sec).slice(-2);  //後ろ二桁を返す
+        min_num = ("0" + min).slice(-2);
+        hour_num =("0" + hour).slice(-2);
+
+        $("#timer").html(hour_num + ":" + min_num + ":" + sec_num);
+      }
+
+      //スタートボタン
+      $("#start").on("click",function(){
+        sec = 0;
+        min = 0;
+        hour = 0;
+        $("#timer").html("00:00:00");
+        time = setInterval(countup ,1000);
+
+        $(this).prop("disabled", true); //thisは(＃start)
+
+        $("#stop,#reset").removeAttr("disabled");
+        //removeAttr ()は指定属性を持つ要素から、属性を削除
+      });
+
+      //ストップボタン
+      $("#stop").on("click",function(){
+        clearInterval(time);
+        $(this).prop("disabled",true);
+        $("#restart").removeAttr("disabled")
+      });
+
+      //リスタート
+      $("#restart").on("click",function(){
+        time = setInterval(countup ,1000);
+        $(this).prop("disabled",true);
+        $("#stop").removeAttr("disabled");
+      });
+      //リセット処理
+      $("#reset").on("click",function(){
+        sec = 0;
+        min = 0;
+        hour = 0;
+        $("#timer").html("00:00:00");
+        clearInterval(time);
+        $("#stop,#restart,#reset").prop("disabled",true);
+        $("#start").removeAttr("disabled");
+      });
     });
   </script>

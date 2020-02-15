@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>jQUeryの練習</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  
+</head>
+<body>
+  <div id="main">
+    <p id="p1">変数1</p>
+    <p id="p2">変数2</p>
+  </div>  
+</body>
+<script>
+  $(function(){
+    //変数 プログラムの中で値を入れる箱
+    // 宣言方法 
+    // var 変数名; or var 変数名=値;
+    // var x;
+    // x=10;
+    // $("#p1").text(x);
+    // var x=10;
+    // $("#p1").text(x)
+
+    //変数を使った計算１
+    // var a = 2+3;
+    // var b = 2-3;
+    // var a = 6*3;
+    // var b = 6/3;
+    // // var c = a*b;
+    // // var d = a/b;
+    // $("#p1").text(a);
+    // $("#p2").text(b);
+
+    // 変数に文字列を代入
+    var str = "こんにちは";
+    $("#p1").text(str);
+    //文字列変数の足し算
+    var str1 = "太郎君"
+    $("#p1").text(str + str1);
+
+
+  });
+</script>
